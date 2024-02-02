@@ -4,6 +4,6 @@ import android.media.Image
 import com.example.alendarpictures.R
 
 data class PictureState(
-    val nameEvents: String = "Name Events",
+    val nameEvents: String = "",
     val picture: Int = R.drawable.baseline_add_reaction_24
 )

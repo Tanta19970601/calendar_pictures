@@ -1,4 +1,4 @@
-package com.example.alendarpictures.androidapp.data.remote.dto.city
+package com.example.alendarpictures.androidapp.data.remote.dto
 
 data class WikipedaiDto(
     val language: String,

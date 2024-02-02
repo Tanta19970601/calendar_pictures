@@ -4,5 +4,6 @@ import java.time.LocalDate
 
 data class CalendarState(
     val date: LocalDate = LocalDate.now(),
-    val requestText: String = ""
+    val isShow: Boolean = false,
+
 )

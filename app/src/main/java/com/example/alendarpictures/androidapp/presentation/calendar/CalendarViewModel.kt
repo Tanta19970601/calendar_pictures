@@ -22,18 +22,30 @@ class CalendarViewModel @Inject constructor(
     private val _state = MutableStateFlow(CalendarState())
     val state = _state.asStateFlow()
 
+
 //    val options = ImageGenerator.ImageGeneratorOptions.builder()
 //        .setImageGeneratorModelDirectory(state.value.requestText)
 //        .build()
+
+    fun openDialog(type: String) {
+        _state.update { state.value.copy(isShow = true) }
+        getWikipediaEvens(type = type)
+    }
+
+    fun closeDialog() {
+        _state.update { state.value.copy(isShow = false) }
+    }
 
     fun setDate(date: LocalDate) {
         _state.update { state.value.copy(date = date) }
     }
 
-    fun getWikipediaEvens() = viewModelScope.launch(Dispatchers.IO) {
-        val eventsW = wikipediaRepository.getWikipediaEvents(state.value.date)
-        _state.update { state.value.copy( requestText = eventsW.body()?.events?.get(0)?.text.orEmpty()) }
+    fun getWikipediaEvens(type: String) {
+        val day = state.value.date.monthValue.toString()
+        val month = state.value.date.dayOfMonth.toString()
+        viewModelScope.launch(Dispatchers.IO) {
+            wikipediaRepository.getWikipediaEvent(day, month, type)
+            closeDialog()
+        }
     }
-
-
 }

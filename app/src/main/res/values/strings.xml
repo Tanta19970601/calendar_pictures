@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Сalendar pictures</string>
+    <string name="all">All</string>
+    <string name="selected">Selected</string>
+    <string name="births">Births</string>
+    <string name="deaths">Deaths</string>
+    <string name="holidays">Holidays</string>
+    <string name="events">Events</string>
 </resources>

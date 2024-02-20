@@ -27,9 +27,9 @@ class WikipediaRepositoryImpl @Inject constructor(
             )
         wikipediaEventsDao.insert(
             WikipediaEventsEntity(
-                nameEvent = when (type) {
+                    nameEvent = when (type.lowercase()) {
                     "births" -> eventsW.body()?.births?.get(1)?.text.orEmpty()
-                    "Deaths" -> eventsW.body()?.deaths?.get(1)?.text.orEmpty()
+                    "deaths" -> eventsW.body()?.deaths?.get(1)?.text.orEmpty()
                     "events" -> eventsW.body()?.events?.get(1)?.text.orEmpty()
                     "holidays" -> eventsW.body()?.holidays?.get(1)?.text.orEmpty()
                     else -> eventsW.body()?.selected?.get(1)?.text.orEmpty()

@@ -9,14 +9,19 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -29,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
@@ -91,6 +97,19 @@ fun CalendarScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
+                TopAppBar(
+                    title = { Text(text = "Calendar picture") },
+                    actions = {
+                        IconButton(onClick = { navController.navigate(Screen.LanguageScreen.route) }) {
+                            Icon(
+                                imageVector = Icons.Filled.MoreVert,
+                                contentDescription = null
+                            )
+
+                        }
+                    }
+                )
+
                 Button(onClick = { dateDialogState.show() }) {
                     Text(text = "Pick date")
                 }
@@ -133,44 +152,43 @@ fun CalendarScreen(
                         DropdownMenuItems(
                             name = stringResource(R.string.all),
                             onClick = {
-                                type = "All"
+                                type = "all"
                                 isExpanded = false
                                 viewModel.openDialog(type)
                             })
                         DropdownMenuItems(
                             name = stringResource(R.string.selected),
                             onClick = {
-                                type = "Selected"
+                                type = "selected"
                                 isExpanded = false
                                 viewModel.openDialog(type)
                             })
                         DropdownMenuItems(name = stringResource(R.string.births),
                             onClick = {
-                                type = "Births"
+                                type = "births"
                                 isExpanded = false
                                 viewModel.openDialog(type)
                             })
                         DropdownMenuItems(name = stringResource(R.string.deaths),
                             onClick = {
-                                type = "Deaths"
+                                type = "deaths"
                                 isExpanded = false
                                 viewModel.openDialog(type)
                             })
                         DropdownMenuItems(name = stringResource(R.string.holidays),
                             onClick = {
-                                type = "Holidays"
+                                type = "holidays"
                                 isExpanded = false
                                 viewModel.openDialog(type)
                             })
                         DropdownMenuItems(name = stringResource(R.string.events),
                             onClick = {
-                                type = "Events"
+                                type = "events"
                                 isExpanded = false
                                 viewModel.openDialog(type)
                             })
                     }
                 }
-
 
                 TextButton(onClick = {
                     navController.navigate(Screen.PictureScreen.route)

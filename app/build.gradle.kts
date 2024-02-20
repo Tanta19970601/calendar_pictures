@@ -83,6 +83,7 @@ dependencies {
     implementation("androidx.work:work-runtime-ktx:2.8.1")
     implementation("androidx.room:room-ktx:2.6.0")
     kapt("androidx.room:room-compiler:2.6.0")
+    implementation("androidx.compose.material3:material3:1.1.2")
 
 
     //Date

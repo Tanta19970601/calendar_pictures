@@ -1,53 +1,38 @@
-package com.example.alendarpictures.androidapp.presentation.pictures
+package com.example.alendarpictures.androidapp.presentation.language
 
-
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableLongStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.withFrameMillis
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import coil.compose.AsyncImagePainter.State.Empty.painter
-import com.example.alendarpictures.R
 import com.example.alendarpictures.util.Screen
-import kotlinx.coroutines.delay
 
-
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun PictureScreen(
+fun LanguageScreen(
     navController: NavController,
-    viewModel: PictureViewModel = hiltViewModel(),
-    state: PictureState = viewModel.state.collectAsStateWithLifecycle().value,
+    viewModel: LanguageViewModel = hiltViewModel(),
+    state: LanguageState = viewModel.state.collectAsStateWithLifecycle().value,
     actions: @Composable RowScope.() -> Unit = {}
 ) {
+    val context = LocalContext.current
     TopAppBar(
         title = {
             Row(
@@ -57,25 +42,20 @@ fun PictureScreen(
         },
         actions = actions,
         navigationIcon = {
-            IconButton(onClick = { navController.navigate(Screen.CalendarScreen.route) }) {
+            IconButton(onClick = { navController.navigate(Screen.CalendarScreen.route)}) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
                     contentDescription = "Back icon"
                 )
             }
         })
-
     Column(
         modifier = Modifier
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text(text = state.nameEvents)
-        Image(
-            painter = painterResource(id = R.drawable.baseline_add_reaction_24),
-            contentDescription = null
-        )
+
 
     }
 }

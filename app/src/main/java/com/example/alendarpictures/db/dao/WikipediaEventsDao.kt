@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 interface WikipediaEventsDao {
 
 
-    @Query("SELECT * FROM wikipediaeventsentity")
+        @Query("SELECT * FROM wikipediaeventsentity")
     fun getAll(): Flow<List<WikipediaEventsEntity>>
 
     @Query("SELECT * FROM wikipediaeventsentity ORDER BY time DESC")

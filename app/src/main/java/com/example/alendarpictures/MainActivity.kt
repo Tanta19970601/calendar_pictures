@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.alendarpictures.androidapp.presentation.calendar.CalendarScreen
+import com.example.alendarpictures.androidapp.presentation.event.EventListScreen
 import com.example.alendarpictures.androidapp.presentation.language.LanguageScreen
 import com.example.alendarpictures.androidapp.presentation.pictures.PictureScreen
 import com.example.alendarpictures.ui.theme.СalendarPicturesTheme
@@ -36,7 +37,9 @@ class MainActivity : ComponentActivity() {
                     }
                     composable(route = Screen.LanguageScreen.route) {
                         LanguageScreen(navController = navController)
-
+                    }
+                    composable(route = Screen.EventListScreen.route) {
+                        EventListScreen(navController = navController)
                     }
                 }
             }

@@ -8,7 +8,9 @@ interface WikipediaRepository {
 
     suspend fun getWikipediaEvent(
         monthValue: String,
-        dayOfMonth: String, type: String
+        dayOfMonth: String,
+        typeEvent: String,
+        typeLanguage: String
     ): WikipediaEventsEntity?
 
     suspend fun getWikipediaEvents(): Flow<List<WikipediaEventsEntity>>

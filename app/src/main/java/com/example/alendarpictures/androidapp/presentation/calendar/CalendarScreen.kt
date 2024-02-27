@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Button
@@ -32,13 +31,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.PopupProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
@@ -62,10 +57,16 @@ fun CalendarScreen(
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val options = listOf("All", "Selected", "Births", "Deaths", "Holidays", "Events")
-    var isExpanded by remember {
+    var isEvent by remember {
         mutableStateOf(false)
     }
-    var type by remember {
+    var typeEvent by remember {
+        mutableStateOf(" ")
+    }
+    var isLanguage by remember {
+        mutableStateOf(false)
+    }
+    var typeLanguage by remember {
         mutableStateOf(" ")
     }
     var pickedDate by remember {
@@ -84,7 +85,7 @@ fun CalendarScreen(
         isShow = state.isShow
     )
     СalendarPicturesTheme {
-        Scaffold {
+            Scaffold {
             val dateDialogState = rememberMaterialDialogState()
             Column(
                 modifier = Modifier
@@ -131,62 +132,135 @@ fun CalendarScreen(
                     }
                 }
                 ExposedDropdownMenuBox(
-                    expanded = isExpanded,
-                    onExpandedChange = { isExpanded = !isExpanded },
+                    expanded = isEvent,
+                    onExpandedChange = { isEvent = !isEvent },
                 ) {
                     TextField(
                         modifier = Modifier.menuAnchor(),
                         readOnly = true,
-                        value = type,
+                        value = typeEvent,
                         onValueChange = {},
                         trailingIcon = {
-                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded)
+                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = isEvent)
                         },
                         colors = ExposedDropdownMenuDefaults.textFieldColors(),
                         keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
                     )
                     ExposedDropdownMenu(
-                        expanded = isExpanded,
-                        onDismissRequest = { isExpanded = false },
+                        expanded = isEvent,
+                        onDismissRequest = { isEvent = false },
                     ) {
                         DropdownMenuItems(
                             name = stringResource(R.string.all),
                             onClick = {
-                                type = "all"
-                                isExpanded = false
-                                viewModel.openDialog(type)
+                                typeEvent = "all"
+                                isEvent = false
                             })
                         DropdownMenuItems(
                             name = stringResource(R.string.selected),
                             onClick = {
-                                type = "selected"
-                                isExpanded = false
-                                viewModel.openDialog(type)
+                                typeEvent = "selected"
+                                isEvent = false
                             })
                         DropdownMenuItems(name = stringResource(R.string.births),
                             onClick = {
-                                type = "births"
-                                isExpanded = false
-                                viewModel.openDialog(type)
+                                typeEvent = "births"
+                                isEvent = false
+
                             })
                         DropdownMenuItems(name = stringResource(R.string.deaths),
                             onClick = {
-                                type = "deaths"
-                                isExpanded = false
-                                viewModel.openDialog(type)
+                                typeEvent = "deaths"
+                                isEvent = false
                             })
                         DropdownMenuItems(name = stringResource(R.string.holidays),
                             onClick = {
-                                type = "holidays"
-                                isExpanded = false
-                                viewModel.openDialog(type)
+                                typeEvent = "holidays"
+                                isEvent = false
                             })
                         DropdownMenuItems(name = stringResource(R.string.events),
                             onClick = {
-                                type = "events"
-                                isExpanded = false
-                                viewModel.openDialog(type)
+                                typeEvent = "events"
+                                isEvent = false
                             })
+                    }
+                }
+                ExposedDropdownMenuBox(
+                    expanded = isLanguage,
+                    onExpandedChange = { isLanguage = !isLanguage },
+                ) {
+                    TextField(
+                        modifier = Modifier.menuAnchor(),
+                        readOnly = true,
+                        value = typeLanguage,
+                        onValueChange = {},
+                        trailingIcon = {
+                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = isLanguage)
+                        },
+                        colors = ExposedDropdownMenuDefaults.textFieldColors(),
+                        keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
+                    )
+                    ExposedDropdownMenu(
+                        expanded = isLanguage,
+                        onDismissRequest = { isLanguage = false },
+                    ) {
+                        DropdownMenuItems(
+                            name = stringResource(R.string.english),
+                            onClick = {
+                                typeLanguage = "en"
+                                isLanguage = false
+                                viewModel.openDialog(typeEvent, typeLanguage)
+                            })
+                        DropdownMenuItems(
+                            name = stringResource(R.string.german),
+                            onClick = {
+                                typeLanguage = "de"
+                                isLanguage = false
+                                viewModel.openDialog(typeEvent, typeLanguage)
+                            })
+                        DropdownMenuItems(name = stringResource(R.string.french),
+                            onClick = {
+                                typeLanguage = "fr"
+                                isLanguage = false
+                                viewModel.openDialog(typeEvent, typeLanguage)
+                            })
+                        DropdownMenuItems(name = stringResource(R.string.swedish),
+                            onClick = {
+                                typeLanguage = "sv"
+                                isLanguage = false
+                                viewModel.openDialog(typeEvent, typeLanguage)
+                            })
+                        DropdownMenuItems(name = stringResource(R.string.portuguese),
+                            onClick = {
+                                typeLanguage = "pt"
+                                isLanguage = false
+                                viewModel.openDialog(typeEvent,typeLanguage)
+                            })
+                        DropdownMenuItems(name = stringResource(R.string.russian),
+                            onClick = {
+                                typeLanguage = "ru"
+                                isLanguage = false
+                                viewModel.openDialog(typeEvent, typeLanguage)
+                            })
+                        DropdownMenuItems(name = stringResource(R.string.spanish),
+                            onClick = {
+                                typeLanguage = "es"
+                                isLanguage = false
+                                viewModel.openDialog(typeEvent, typeLanguage)
+                            })
+                        DropdownMenuItems(name = stringResource(R.string.arabic),
+                            onClick = {
+                                typeLanguage = "ar"
+                                isEvent = false
+                                viewModel.openDialog(typeEvent, typeLanguage)
+                            })
+                        DropdownMenuItems(name = stringResource(R.string.bosnian),
+                            onClick = {
+                                typeLanguage = "bs"
+                                isLanguage = false
+                                viewModel.openDialog(typeEvent, typeLanguage)
+                            })
+
                     }
                 }
 

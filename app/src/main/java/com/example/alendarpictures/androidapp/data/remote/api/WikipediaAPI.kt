@@ -9,7 +9,7 @@ import retrofit2.http.Query
 interface WikipediaAPI {
     @GET("{language}/{onthisday}/{type}/{MM}/{DD}")
     suspend fun getEvent(
-        @Path(value = "language") language: String = "en",
+        @Path(value = "language") language: String,
         @Path(value = "onthisday") onthisday: String = "onthisday",
         @Path(value = "type") type: String,
         @Path(value = "MM") mm: String,

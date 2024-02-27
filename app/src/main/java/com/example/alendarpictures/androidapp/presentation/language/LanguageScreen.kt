@@ -56,6 +56,5 @@ fun LanguageScreen(
         verticalArrangement = Arrangement.Center
     ) {
 
-
     }
 }

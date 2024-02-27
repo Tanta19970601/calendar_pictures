@@ -27,9 +27,9 @@ class CalendarViewModel @Inject constructor(
 //        .setImageGeneratorModelDirectory(state.value.requestText)
 //        .build()
 
-    fun openDialog(type: String) {
+    fun openDialog(typeEvent: String, typeLanguage: String) {
         _state.update { state.value.copy(isShow = true) }
-        getWikipediaEvens(type = type)
+        getWikipediaEvens(typeEvent = typeEvent, typeLanguage = typeLanguage)
     }
 
     fun closeDialog() {
@@ -40,11 +40,13 @@ class CalendarViewModel @Inject constructor(
         _state.update { state.value.copy(date = date) }
     }
 
-    fun getWikipediaEvens(type: String) {
+    fun getWikipediaEvens(typeEvent: String, typeLanguage: String) {
         val day = state.value.date.monthValue.toString()
         val month = state.value.date.dayOfMonth.toString()
         viewModelScope.launch(Dispatchers.IO) {
-            wikipediaRepository.getWikipediaEvent(day, month, type)
+            wikipediaRepository.getWikipediaEvent(
+                day, month, typeEvent, typeLanguage
+            )
             closeDialog()
         }
     }

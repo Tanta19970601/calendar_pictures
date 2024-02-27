@@ -1,6 +1,8 @@
 package com.example.alendarpictures.di
 
+import com.example.alendarpictures.androidapp.data.data.repository.EventsRepositoryImpl
 import com.example.alendarpictures.androidapp.data.data.repository.WikipediaRepositoryImpl
+import com.example.alendarpictures.androidapp.data.remote.EventsRepository
 import com.example.alendarpictures.androidapp.data.remote.WikipediaRepository
 import dagger.Binds
 import dagger.Module
@@ -19,4 +21,10 @@ abstract class RepositoryModule {
     abstract fun bindWikipediaRepository(
         wikipediaRepositoryImpl: WikipediaRepositoryImpl
     ): WikipediaRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindEventsRepository(
+        eventsRepositoryImpl: EventsRepositoryImpl
+    ): EventsRepository
 }

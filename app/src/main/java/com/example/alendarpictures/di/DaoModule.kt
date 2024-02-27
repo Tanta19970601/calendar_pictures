@@ -1,5 +1,6 @@
 package com.example.alendarpictures.di
 
+import com.example.alendarpictures.db.dao.EventDao
 import com.example.alendarpictures.db.dao.WikipediaEventsDao
 import com.example.alendarpictures.db.database.AppDatabase
 import dagger.Module
@@ -16,5 +17,11 @@ object DaoModule {
     @Singleton
     fun provideWikipediaEventsDao(db: AppDatabase): WikipediaEventsDao {
         return db.wikipediaEventsDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideEventDao(db: AppDatabase): EventDao {
+        return db.eventDao()
     }
 }

@@ -6,4 +6,13 @@
     <string name="deaths">Deaths</string>
     <string name="holidays">Holidays</string>
     <string name="events">Events</string>
+    <string name="english">English</string>
+    <string name="german">German</string>
+    <string name="french">French</string>
+    <string name="swedish">Swedish</string>
+    <string name="portuguese">Portuguese</string>
+    <string name="russian">Russian</string>
+    <string name="spanish">Spanish</string>
+    <string name="arabic">Arabic</string>
+    <string name="bosnian">Bosnian</string>
 </resources>

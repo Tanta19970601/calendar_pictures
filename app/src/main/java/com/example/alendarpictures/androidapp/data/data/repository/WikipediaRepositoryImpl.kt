@@ -17,27 +17,29 @@ class WikipediaRepositoryImpl @Inject constructor(
     override suspend fun getWikipediaEvent(
         monthValue: String,
         dayOfMonth: String,
-        type: String
+        typeEvent: String,
+        typeLanguage: String
     ): WikipediaEventsEntity? {
         val eventsW =
             wikipediaAPI.getEvent(
+                language = typeLanguage,
                 mm = monthValue,
                 dd = dayOfMonth,
-                type = type
+                type = typeEvent
             )
         wikipediaEventsDao.insert(
             WikipediaEventsEntity(
-                    nameEvent = when (type.lowercase()) {
+                nameEvent = when (typeEvent.lowercase()) {
                     "births" -> eventsW.body()?.births?.get(1)?.text.orEmpty()
                     "deaths" -> eventsW.body()?.deaths?.get(1)?.text.orEmpty()
                     "events" -> eventsW.body()?.events?.get(1)?.text.orEmpty()
                     "holidays" -> eventsW.body()?.holidays?.get(1)?.text.orEmpty()
                     else -> eventsW.body()?.selected?.get(1)?.text.orEmpty()
                 },
-                language = "en",
+                language = typeLanguage,
                 dayEvent = dayOfMonth,
                 monthEvent = monthValue,
-                type = type
+                type = typeEvent
             )
         )
         return wikipediaEventsDao.getNameEvent()

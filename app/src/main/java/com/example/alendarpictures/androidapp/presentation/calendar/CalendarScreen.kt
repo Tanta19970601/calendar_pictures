@@ -85,7 +85,7 @@ fun CalendarScreen(
         isShow = state.isShow
     )
     СalendarPicturesTheme {
-            Scaffold {
+        Scaffold(modifier = Modifier.padding(8.dp)) {
             val dateDialogState = rememberMaterialDialogState()
             Column(
                 modifier = Modifier
@@ -234,7 +234,7 @@ fun CalendarScreen(
                             onClick = {
                                 typeLanguage = "pt"
                                 isLanguage = false
-                                viewModel.openDialog(typeEvent,typeLanguage)
+                                viewModel.openDialog(typeEvent, typeLanguage)
                             })
                         DropdownMenuItems(name = stringResource(R.string.russian),
                             onClick = {
@@ -265,9 +265,9 @@ fun CalendarScreen(
                 }
 
                 TextButton(onClick = {
-                    navController.navigate(Screen.PictureScreen.route)
+                    navController.navigate(Screen.EventListScreen.route)
                 }) {
-                    Text(text = "Get Picture")
+                    Text(text = "List Events")
                 }
             }
 

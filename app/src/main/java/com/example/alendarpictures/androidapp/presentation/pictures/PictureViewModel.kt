@@ -27,10 +27,10 @@ class PictureViewModel @Inject constructor(
 
     fun getWikipediaName() = viewModelScope.launch(Dispatchers.IO) {
         val eventsW = wikipediaRepository.getNameEvent()
-        eventsW?.let { event ->
-            _state.update {
-                it.copy(nameEvents = event.nameEvent)
-            }
-        }
+//        eventsW?.let { event ->
+//            _state.update {
+//                it.copy(nameEvents = event.nameEvent)
+//            }
+//        }
     }
 }

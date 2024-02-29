@@ -11,11 +11,10 @@ interface WikipediaRepository {
         dayOfMonth: String,
         typeEvent: String,
         typeLanguage: String
-    ): WikipediaEventsEntity?
+    ): Flow<List<WikipediaEventsEntity>>
 
-    suspend fun getWikipediaEvents(): Flow<List<WikipediaEventsEntity>>
-
-    suspend fun getNameEvent(): WikipediaEventsEntity?
+    //    suspend fun getWikipediaEvents(): Flow<List<WikipediaEventsEntity>>
+    suspend fun getNameEvent(): List<WikipediaEventsEntity>
 
     suspend fun saveWikipediaEvents(date: LocalDate): WikipediaEventsEntity
     suspend fun getPicture(string: String)

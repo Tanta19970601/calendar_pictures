@@ -6,6 +6,7 @@ import java.time.LocalDateTime
 
 @Entity
 data class WikipediaEventsEntity(
+    //таблица для большого кол-ва листов (таблица 1 )
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
     val nameEvent: String = "",
@@ -15,3 +16,7 @@ data class WikipediaEventsEntity(
     val type: String = "",
     val time: LocalDateTime = LocalDateTime.now()
 )
+//в одной таблице у меня дожны храниться данные только данные которые будет отражаться на экране с картинкой
+//        для этого надо, только текст и ид
+//
+//        В другой таблице долно храниться все строчки, которые будут показваться списком

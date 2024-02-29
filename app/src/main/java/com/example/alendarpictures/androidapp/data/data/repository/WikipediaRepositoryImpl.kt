@@ -2,6 +2,9 @@ package com.example.alendarpictures.androidapp.data.data.repository
 
 import com.example.alendarpictures.androidapp.data.remote.WikipediaRepository
 import com.example.alendarpictures.androidapp.data.remote.api.WikipediaAPI
+import com.example.alendarpictures.androidapp.models.Birth
+import com.example.alendarpictures.androidapp.models.Death
+import com.example.alendarpictures.androidapp.models.Event
 import com.example.alendarpictures.db.dao.WikipediaEventsDao
 import com.example.alendarpictures.db.entities.WikipediaEventsEntity
 import kotlinx.coroutines.flow.Flow
@@ -19,7 +22,7 @@ class WikipediaRepositoryImpl @Inject constructor(
         dayOfMonth: String,
         typeEvent: String,
         typeLanguage: String
-    ): WikipediaEventsEntity? {
+    ): Flow<List<WikipediaEventsEntity>> {
         val eventsW =
             wikipediaAPI.getEvent(
                 language = typeLanguage,
@@ -27,36 +30,78 @@ class WikipediaRepositoryImpl @Inject constructor(
                 dd = dayOfMonth,
                 type = typeEvent
             )
-        wikipediaEventsDao.insert(
-            WikipediaEventsEntity(
-                nameEvent = when (typeEvent.lowercase()) {
-                    "births" -> eventsW.body()?.births?.get(1)?.text.orEmpty()
-                    "deaths" -> eventsW.body()?.deaths?.get(1)?.text.orEmpty()
-                    "events" -> eventsW.body()?.events?.get(1)?.text.orEmpty()
-                    "holidays" -> eventsW.body()?.holidays?.get(1)?.text.orEmpty()
-                    else -> eventsW.body()?.selected?.get(1)?.text.orEmpty()
-                },
-                language = typeLanguage,
-                dayEvent = dayOfMonth,
-                monthEvent = monthValue,
-                type = typeEvent
+        eventsW.body()?.births?.forEach { event ->
+            wikipediaEventsDao.insert(
+                WikipediaEventsEntity(
+                    nameEvent = event.text,
+                    language = typeLanguage,
+                    dayEvent = dayOfMonth,
+                    monthEvent = monthValue,
+                    type = typeEvent
+                )
             )
-        )
-        return wikipediaEventsDao.getNameEvent()
-    }
-
-    override suspend fun getWikipediaEvents(): Flow<List<WikipediaEventsEntity>> {
+        }
+        eventsW.body()?.deaths ?.forEach { event ->
+            wikipediaEventsDao.insert(
+                WikipediaEventsEntity(
+                    nameEvent = event.text,
+                    language = typeLanguage,
+                    dayEvent = dayOfMonth,
+                    monthEvent = monthValue,
+                    type = typeEvent
+                )
+            )
+        }
+        eventsW.body()?.holidays?.forEach { event ->
+            wikipediaEventsDao.insert(
+                WikipediaEventsEntity(
+                    nameEvent = event.text,
+                    language = typeLanguage,
+                    dayEvent = dayOfMonth,
+                    monthEvent = monthValue,
+                    type = typeEvent
+                )
+            )
+        }
+        eventsW.body()?.events?.forEach { event ->
+            wikipediaEventsDao.insert(
+                WikipediaEventsEntity(
+                    nameEvent = event.text,
+                    language = typeLanguage,
+                    dayEvent = dayOfMonth,
+                    monthEvent = monthValue,
+                    type = typeEvent
+                )
+            )
+        }
+        eventsW.body()?.selected?.forEach { event ->
+            wikipediaEventsDao.insert(
+                WikipediaEventsEntity(
+                    nameEvent = event.text,
+                    language = typeLanguage,
+                    dayEvent = dayOfMonth,
+                    monthEvent = monthValue,
+                    type = typeEvent
+                )
+            )
+        }
         return wikipediaEventsDao.getAll()
     }
 
-    override suspend fun getNameEvent(): WikipediaEventsEntity? {
-        return wikipediaEventsDao.getNameEvent()
+
+//    override suspend fun getWikipediaEvents(): Flow<List<WikipediaEventsEntity>> {
+//        return wikipediaEventsDao.getAll()
+//    }
+
+    override suspend fun getNameEvent(): List<WikipediaEventsEntity> {
+        return wikipediaEventsDao.getListEvent()
     }
 
 
     override suspend fun saveWikipediaEvents(date: LocalDate): WikipediaEventsEntity {
         return WikipediaEventsEntity()
     }
+
 
     override suspend fun getPicture(string: String) {}
 

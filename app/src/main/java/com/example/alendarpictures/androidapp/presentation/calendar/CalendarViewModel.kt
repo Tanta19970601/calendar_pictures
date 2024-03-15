@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,7 +23,6 @@ class CalendarViewModel @Inject constructor(
 
     private val _state = MutableStateFlow(CalendarState())
     val state = _state.asStateFlow()
-
 
 //    val options = ImageGenerator.ImageGeneratorOptions.builder()
 //        .setImageGeneratorModelDirectory(state.value.requestText)

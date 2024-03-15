@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -114,7 +115,7 @@ fun CalendarScreen(
                 Button(onClick = { dateDialogState.show() }) {
                     Text(text = "Pick date")
                 }
-                Text(text = formattedDate)
+                Text(text = DateTimeFormatter.ofPattern("dd MM yyyy").format(state.date))
                 Spacer(modifier = Modifier.height(16.dp))
                 MaterialDialog(
                     dialogState = dateDialogState,
@@ -127,8 +128,7 @@ fun CalendarScreen(
                         initialDate = LocalDate.now(),
                         waitForPositiveButton = true,
                     ) {
-                        pickedDate = it
-                        viewModel.setDate(pickedDate)
+                        viewModel.setDate(it)
                     }
                 }
                 ExposedDropdownMenuBox(
@@ -265,7 +265,13 @@ fun CalendarScreen(
                 }
 
                 TextButton(onClick = {
-                    navController.navigate(Screen.EventListScreen.route)
+                    navController.navigate(
+                        Screen.EventListScreen.openRoute(
+                            event = typeEvent,
+                            language = typeLanguage,
+                            date = state.date.toString()
+                        )
+                    )
                 }) {
                     Text(text = "List Events")
                 }

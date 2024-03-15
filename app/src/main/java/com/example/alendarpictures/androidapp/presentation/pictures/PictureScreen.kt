@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
@@ -15,6 +16,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -36,6 +38,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import coil.compose.AsyncImagePainter.State.Empty.painter
 import com.example.alendarpictures.R
+import com.example.alendarpictures.androidapp.presentation.common.dialog.ProgressBarDialog
 import com.example.alendarpictures.util.Screen
 import kotlinx.coroutines.delay
 
@@ -48,34 +51,40 @@ fun PictureScreen(
     state: PictureState = viewModel.state.collectAsStateWithLifecycle().value,
     actions: @Composable RowScope.() -> Unit = {}
 ) {
-    TopAppBar(
-        title = {
-            Row(
-                modifier = Modifier.wrapContentSize(),
-                verticalAlignment = Alignment.CenterVertically
-            ) { Text(text = "Picture", maxLines = 1, overflow = TextOverflow.Ellipsis) }
-        },
-        actions = actions,
-        navigationIcon = {
-            IconButton(onClick = { navController.navigate(Screen.CalendarScreen.route) }) {
-                Icon(
-                    imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = "Back icon"
-                )
-            }
-        })
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Row(
+                        modifier = Modifier.wrapContentSize(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) { Text(text = "Picture", maxLines = 1, overflow = TextOverflow.Ellipsis) }
+                },
+                actions = actions,
+                navigationIcon = {
+                    IconButton(onClick = { navController.navigateUp() }) {
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = "Back icon"
+                        )
+                    }
+                })
+        }) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(text = state.nameEvents)
+            Image(
+                painter = painterResource(id = R.drawable.baseline_add_reaction_24),
+                contentDescription = null
+            )
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(text = state.nameEvents)
-        Image(
-            painter = painterResource(id = R.drawable.baseline_add_reaction_24),
-            contentDescription = null
-        )
-
+        }
     }
+
 }
+

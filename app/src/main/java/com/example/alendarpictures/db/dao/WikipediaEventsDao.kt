@@ -17,17 +17,23 @@ interface WikipediaEventsDao {
     @Query("SELECT * FROM wikipediaeventsentity")
     fun getAll(): Flow<List<WikipediaEventsEntity>>
 
-    @Query("SELECT * FROM wikipediaeventsentity ORDER BY time DESC")
-    suspend fun getNameEvent(): WikipediaEventsEntity?
+    @Query(
+        """SELECT * FROM wikipediaeventsentity WHERE dayEvent = :dayOfMonth AND monthEvent = :monthValue 
+             AND type = :typeEvent AND language = :typeLanguage"""
+    )
+    suspend fun getListEvent(
+        monthValue: String,
+        dayOfMonth: String,
+        typeEvent: String,
+        typeLanguage: String
+    ): List<WikipediaEventsEntity>
 
-    @Query("SELECT * FROM wikipediaeventsentity ORDER BY nameEvent DESC")
-    suspend fun getListEvent(): List<WikipediaEventsEntity>
+//    @Query("SELECT * FROM wikipediaeventsentity ORDER BY nameEvent DESC")
+//    suspend fun getNameEvent(): List<WikipediaEventsEntity>
+
 
     @Insert
     suspend fun insert(wikipediaEventsEntity: WikipediaEventsEntity): Long
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun replace(wikipediaEventsEntity: WikipediaEventsEntity): Long
 
     @Update
     suspend fun update(wikipediaEventsEntity: WikipediaEventsEntity)

@@ -16,95 +16,99 @@ class WikipediaRepositoryImpl @Inject constructor(
     private val wikipediaEventsDao: WikipediaEventsDao
 ) : WikipediaRepository {
 
-
     override suspend fun getWikipediaEvent(
         monthValue: String,
         dayOfMonth: String,
         typeEvent: String,
         typeLanguage: String
-    ): Flow<List<WikipediaEventsEntity>> {
-        val eventsW =
-            wikipediaAPI.getEvent(
-                language = typeLanguage,
-                mm = monthValue,
-                dd = dayOfMonth,
-                type = typeEvent
-            )
-        eventsW.body()?.births?.forEach { event ->
-            wikipediaEventsDao.insert(
-                WikipediaEventsEntity(
-                    nameEvent = event.text,
+    ) {
+        val list = getNameEventList(
+            monthValue = monthValue,
+            dayOfMonth = dayOfMonth,
+            typeEvent = typeEvent,
+            typeLanguage = typeLanguage
+        )
+        if (!list.isEmpty()) {
+            list
+        } else {
+            val eventsW =
+                wikipediaAPI.getEvent(
                     language = typeLanguage,
-                    dayEvent = dayOfMonth,
-                    monthEvent = monthValue,
+                    mm = monthValue,
+                    dd = dayOfMonth,
                     type = typeEvent
                 )
-            )
-        }
-        eventsW.body()?.deaths ?.forEach { event ->
-            wikipediaEventsDao.insert(
-                WikipediaEventsEntity(
-                    nameEvent = event.text,
-                    language = typeLanguage,
-                    dayEvent = dayOfMonth,
-                    monthEvent = monthValue,
-                    type = typeEvent
+            eventsW.body()?.births?.forEach { event ->
+                wikipediaEventsDao.insert(
+                    WikipediaEventsEntity(
+                        nameEvent = event.text,
+                        language = typeLanguage,
+                        dayEvent = dayOfMonth,
+                        monthEvent = monthValue,
+                        type = typeEvent
+                    )
                 )
-            )
-        }
-        eventsW.body()?.holidays?.forEach { event ->
-            wikipediaEventsDao.insert(
-                WikipediaEventsEntity(
-                    nameEvent = event.text,
-                    language = typeLanguage,
-                    dayEvent = dayOfMonth,
-                    monthEvent = monthValue,
-                    type = typeEvent
+            }
+            eventsW.body()?.deaths?.forEach { event ->
+                wikipediaEventsDao.insert(
+                    WikipediaEventsEntity(
+                        nameEvent = event.text,
+                        language = typeLanguage,
+                        dayEvent = dayOfMonth,
+                        monthEvent = monthValue,
+                        type = typeEvent
+                    )
                 )
-            )
-        }
-        eventsW.body()?.events?.forEach { event ->
-            wikipediaEventsDao.insert(
-                WikipediaEventsEntity(
-                    nameEvent = event.text,
-                    language = typeLanguage,
-                    dayEvent = dayOfMonth,
-                    monthEvent = monthValue,
-                    type = typeEvent
+            }
+            eventsW.body()?.holidays?.forEach { event ->
+                wikipediaEventsDao.insert(
+                    WikipediaEventsEntity(
+                        nameEvent = event.text,
+                        language = typeLanguage,
+                        dayEvent = dayOfMonth,
+                        monthEvent = monthValue,
+                        type = typeEvent
+                    )
                 )
-            )
-        }
-        eventsW.body()?.selected?.forEach { event ->
-            wikipediaEventsDao.insert(
-                WikipediaEventsEntity(
-                    nameEvent = event.text,
-                    language = typeLanguage,
-                    dayEvent = dayOfMonth,
-                    monthEvent = monthValue,
-                    type = typeEvent
+            }
+            eventsW.body()?.events?.forEach { event ->
+                wikipediaEventsDao.insert(
+                    WikipediaEventsEntity(
+                        nameEvent = event.text,
+                        language = typeLanguage,
+                        dayEvent = dayOfMonth,
+                        monthEvent = monthValue,
+                        type = typeEvent
+                    )
                 )
-            )
+            }
+            eventsW.body()?.selected?.forEach { event ->
+                wikipediaEventsDao.insert(
+                    WikipediaEventsEntity(
+                        nameEvent = event.text,
+                        language = typeLanguage,
+                        dayEvent = dayOfMonth,
+                        monthEvent = monthValue,
+                        type = typeEvent
+                    )
+                )
+            }
         }
-        return wikipediaEventsDao.getAll()
+        return
     }
 
 
-//    override suspend fun getWikipediaEvents(): Flow<List<WikipediaEventsEntity>> {
-//        return wikipediaEventsDao.getAll()
-//    }
-
-    override suspend fun getNameEvent(): List<WikipediaEventsEntity> {
-        return wikipediaEventsDao.getListEvent()
+    override suspend fun getNameEventList(
+        monthValue: String,
+        dayOfMonth: String,
+        typeEvent: String,
+        typeLanguage: String
+    ): List<WikipediaEventsEntity> {
+        return wikipediaEventsDao.getListEvent(
+            monthValue = monthValue,
+            dayOfMonth = dayOfMonth,
+            typeEvent = typeEvent,
+            typeLanguage = typeLanguage
+        )
     }
-
-
-    override suspend fun saveWikipediaEvents(date: LocalDate): WikipediaEventsEntity {
-        return WikipediaEventsEntity()
-    }
-
-
-    override suspend fun getPicture(string: String) {}
-
-//    override suspend fun updateWikipediaEventsEntity(): WikipediaEventsEntity {
-//    }
 }

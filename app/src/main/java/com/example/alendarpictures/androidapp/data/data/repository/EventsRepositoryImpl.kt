@@ -5,25 +5,22 @@ import com.example.alendarpictures.androidapp.data.remote.WikipediaRepository
 import com.example.alendarpictures.androidapp.data.remote.api.WikipediaAPI
 import com.example.alendarpictures.db.dao.EventDao
 import com.example.alendarpictures.db.entities.EventEntity
+import com.example.alendarpictures.db.entities.WikipediaEventsEntity
+import javax.inject.Inject
+import javax.inject.Provider
 
-class EventsRepositoryImpl(
-    private val wikipediaAPI: WikipediaAPI,
-    private val eventDao: EventDao,
-    private val wikipediaRepository: WikipediaRepository
+class EventsRepositoryImpl @Inject constructor(
+    private val eventDao: EventDao
 ) : EventsRepository {
-//    override suspend fun getEvents(
-//        monthValue: String,
-//        dayOfMonth: String,
-//        typeEvent: String,
-//        typeLanguage: String
-//    ): EventEntity? {
-//        eventDao.insert(
-//            EventEntity(
-//                titleName = typeEvent,
-//            )
-//        )
-//        return eventDao.e
-//    }
 
+    override suspend fun setOneEvent() {
+        return
+    }
 
+    override suspend fun getOne(id: Long): EventEntity {
+        val title = eventDao.getNameTitle(id = id)
+        val eventEntity = EventEntity(id = id, titleName = title.nameEvent)
+        eventDao.insert(eventEntity)
+        return eventEntity
+    }
 }

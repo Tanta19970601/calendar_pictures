@@ -1,13 +1,11 @@
 package com.example.alendarpictures.androidapp.data.remote
 
 import com.example.alendarpictures.db.entities.EventEntity
+import com.example.alendarpictures.db.entities.WikipediaEventsEntity
 
 interface EventsRepository {
 
-//    suspend fun getEvents(
-//        monthValue: String,
-//        dayOfMonth: String,
-//        typeEvent: String,
-//        typeLanguage: String
-//    ):EventEntity?
+    suspend fun setOneEvent() {}
+
+    suspend fun getOne(id: Long): EventEntity
 }
